@@ -1,0 +1,36 @@
+# .seedignore - Patterns for files to exclude during seed updates
+# Copy this to .seedignore in your project root and customize as needed
+
+# Project-specific documentation
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+
+# Environment and configuration files
+.env.local
+.env*.local
+.env.production
+
+# Local development files
+.vscode/settings.json
+.idea/workspace.xml
+
+# Build outputs and cache
+dist/
+build/
+.next/
+node_modules/
+
+# CI/CD and deployment
+.github/workflows/deploy.yml
+Dockerfile
+
+# Custom scripts or setup
+scripts/setup.sh
+scripts/local-*.sh
+
+# lines marked with SEED-IGNORE-START/END in files will also be preserved:
+# Example in ./husky/pre-commit:
+#   # SEED-IGNORE-START
+#   node ./version-check.js
+#   # SEED-IGNORE-END
