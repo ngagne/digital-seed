@@ -140,12 +140,13 @@ esac
 - **Choice 2 (MINOR)**: Update to next minor version with warning message (e.g., 1.5.3 → 1.6.0)
 - **Choice 3 (CANCEL)**: Exit the skill and cancel the commit
 
-**Update package.json** with the new version and stage the change:
+**Update package.json and package-lock.json** with the new version and stage the changes:
 
 ```bash
 # Edit package.json to update the version field
-# Then stage it
-git add package.json
+# Then update package-lock.json with the same version
+# Finally stage both files
+git add package.json package-lock.json
 ```
 
 If the version **was already changed**, proceed to the next step.
@@ -303,9 +304,10 @@ Given a version MAJOR.MINOR.PATCH:
 
 1. **Check package.json version status**: Compare current version to staged changes
 2. **Bump version if needed**: If not already updated, bump based on commit type and semantic versioning rules
-3. **Create or update CHANGELOG.md**: Add new version entry with today's date
-4. **Add appropriate sections**: Include only sections that have changes (Added, Fixed, Changed, etc.)
-5. **Stage both files**: Add package.json and CHANGELOG.md to the commit
+3. **Update both package.json and package-lock.json**: Keep version numbers in sync across both files
+4. **Create or update CHANGELOG.md**: Add new version entry with today's date
+5. **Add appropriate sections**: Include only sections that have changes (Added, Fixed, Changed, etc.)
+6. **Stage all files**: Add package.json, package-lock.json, and CHANGELOG.md to the commit
 
 ### Example: Updating CHANGELOG.md and package.json
 
@@ -314,7 +316,7 @@ Given a version MAJOR.MINOR.PATCH:
 **Commit**: `PROJ-123: feat(auth): add two-factor authentication`
 
 **Actions**:
-1. Version not in staged changes → bump minor version to "1.1.0" in package.json
+1. Version not in staged changes → bump minor version to "1.1.0" in package.json and package-lock.json
 2. Create CHANGELOG.md with entry:
 
 ```markdown
@@ -324,9 +326,9 @@ Given a version MAJOR.MINOR.PATCH:
 - Two-factor authentication support
 ```
 
-3. Stage both files and commit
+3. Stage all files and commit
 
-**Result**: Commit includes package.json (1.0.0 → 1.1.0), new CHANGELOG.md, and code changes
+**Result**: Commit includes package.json (1.0.0 → 1.1.0), package-lock.json (1.0.0 → 1.1.0), new CHANGELOG.md, and code changes
 
 ## Git Safety Protocol
 
