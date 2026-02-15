@@ -24,9 +24,9 @@ Use this heading format:
 ## [${VERSION}] - ${TODAY}
 ```
 
-### 2) Ensure `changelog.md` Exists
+### 2) Ensure `CHANGELOG.md` Exists
 
-If `changelog.md` does not exist, create it with this header:
+If `CHANGELOG.md` does not exist, create it with this header:
 
 ```markdown
 # Changelog
@@ -82,7 +82,7 @@ git add CHANGELOG.md
 
 ## Guardrails
 
-- Always target `changelog.md`.
+- Always target `CHANGELOG.md`.
 - Preserve existing entries and ordering (newest first).
 - Keep date format strictly `YYYY-MM-DD`.
 - Never add `## [Unreleased]`.
