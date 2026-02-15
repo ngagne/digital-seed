@@ -16,8 +16,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
       }
     },
     async function () {
-      const currentDate = new Date()
-      return { message: `Welcome to the demo website! The current date is ${currentDate.toLocaleDateString()}` }
+      return { message: 'Welcome to the official fastify demo!' }
     }
   )
 }

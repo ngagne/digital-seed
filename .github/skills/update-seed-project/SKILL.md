@@ -199,6 +199,16 @@ If conflicts exist, Git will mark them in the affected files. For each conflicte
    git commit
    ```
 
+### Step 7.5: Install dependencies
+
+After merging and resolving conflicts, install any new or updated dependencies introduced by the seed repository:
+
+```bash
+npm i
+```
+
+Run this before running tests to ensure the environment matches the merged code.
+
 ### Step 8: Run Tests After Merge
 
 After resolving conflicts, run all tests to verify the merge didn't break anything:
