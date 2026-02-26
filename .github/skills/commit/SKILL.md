@@ -89,6 +89,14 @@ Analyze the diff to determine:
 - **Scope**: What area/module is affected?
 - **Description**: One-line summary of what changed (present tense, imperative mood, <72 chars)
 
+Prioritize the files actually changed when writing the description. Do not use generic messages like "bump version to X" unless the diff is only a version bump.
+
+Path-aware guidance:
+
+- If changes include `.github/skills/*`, write a skill-focused message, e.g. `docs(skills): add release skill guidance` or `chore(skills): refine commit skill workflow`.
+- If changes include both version files and feature/config/docs changes, describe the primary behavioral change, not the version bump.
+- Use `chore(release): bump version to X` only when the commit is strictly release/version metadata updates.
+
 If on a feature/* branch, extract the Jira ID from the branch name: `feature/[JIRA_ID]-description`. For example, if the branch name is `feature/ASDF-1357-do-something`, "ASDF-1357" is the Jira ID.
 
 ### 4. Execute Commit
