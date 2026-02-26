@@ -1,10 +1,18 @@
+"""A book in the catalog."""
 type Book {
+  """Unique identifier for the book."""
   id: ID!
+  """Display title of the book."""
   title: String!
+  """Author name for the book."""
   author: String!
 }
 
 type Query {
+  """Simple health-check query."""
   hello: String!
+  """List all books."""
   books: [Book!]!
+  """Fetch a single book by ID."""
+  book(id: ID!): Book
 }

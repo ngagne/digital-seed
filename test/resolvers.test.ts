@@ -12,4 +12,14 @@ describe('resolvers', () => {
     expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
   });
+
+  test('book returns matching book for valid id', () => {
+    const result = resolvers.Query.book(null, { id: '3' });
+    expect(result).toEqual(books[2]);
+  });
+
+  test('book returns null for unknown id', () => {
+    const result = resolvers.Query.book(null, { id: '999' });
+    expect(result).toBeNull();
+  });
 });
