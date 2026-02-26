@@ -1,0 +1,21 @@
+meta {
+  name: Books Query
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/graphql
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "query": "query Books { books { id title author } }"
+  }
+}
