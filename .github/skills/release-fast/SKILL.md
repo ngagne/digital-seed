@@ -108,6 +108,12 @@ fi
 git commit -m "${JIRA_ID}chore(release): bump version to $NEW_VERSION"
 ```
 
+Path-aware guidance:
+
+- If changes include `.github/skills/*`, write a skill-focused message, e.g. `docs(skills): add release skill guidance` or `chore(skills): refine commit skill workflow`.
+- If changes include both version files and feature/config/docs changes, describe the primary behavioral change, not the version bump.
+- Use `chore(release): bump version to X` only when the commit is strictly release/version metadata updates.
+
 ## Guardrails
 
 - Do not reorder steps.
