@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TMP_DIR="$ROOT_DIR/.tmp-skills"
 TARGET_DIR="$ROOT_DIR/.github/skills"
-REPO_URL="https://github.com/ngagne/digital-seed.git"
+REPO_URL="https://github.com/ngagne/copilot-agent-skills.git"
 
 echo "Starting skills sync..."
 

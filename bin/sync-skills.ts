@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const ROOT_DIR = path.dirname(__filename);
 const TMP_DIR = path.join(ROOT_DIR, '.tmp-skills');
 const TARGET_DIR = path.join(ROOT_DIR, '.github', 'skills');
-const REPO_URL = 'https://github.com/ngagne/digital-seed.git';
+const REPO_URL = 'https://github.com/ngagne/copilot-agent-skills.git';
 
 function runCommand(command: string, args: string[]): Promise<void> {
   return new Promise((resolve, reject) => {

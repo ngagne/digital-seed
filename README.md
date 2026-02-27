@@ -1,6 +1,6 @@
-# Example Fastify + Apollo (TypeScript)
+# copilot-agent-skills
 
-Minimal Node 24 + TypeScript example using Fastify and Apollo Server with a simple GraphQL endpoint and Jest tests.
+A collection of agents, skills, prompts for GitHub Copilot (or similar), with a minimal Node 24 + TypeScript example using Fastify and Apollo Server with a simple GraphQL endpoint and Jest tests, useful for testing with Copilot.
 
 Commands
 

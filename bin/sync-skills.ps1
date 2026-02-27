@@ -4,7 +4,7 @@ try {
   $rootDir = Split-Path -Parent $MyInvocation.MyCommand.Path
   $tmpDir = Join-Path $rootDir '.tmp-skills'
   $targetDir = Join-Path $rootDir '.github/skills'
-  $repoUrl = 'https://github.com/ngagne/digital-seed.git'
+  $repoUrl = 'https://github.com/ngagne/copilot-agent-skills.git'
 
   Write-Host 'Starting skills sync...'
 
