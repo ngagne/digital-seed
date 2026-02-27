@@ -39,7 +39,31 @@ query {
   books {
     id
     title
-    author
+    author {
+      id
+      name
+      birthdate
+    }
+  }
+  authors {
+    id
+    name
+  }
+}
+```
+
+You can also fetch a single author by id:
+
+```graphql
+query {
+  author(id: "2") {
+    id
+    name
+    birthdate
+    books {
+      id
+      title
+    }
   }
 }
 ```

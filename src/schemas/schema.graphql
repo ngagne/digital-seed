@@ -32,3 +32,16 @@ type Query {
   """Fetch a single author by ID."""
   author(id: ID!): Author
 }
+
+"""Modifications to the catalog data."""
+type Mutation {
+  """Create a new author record and return it. The ID is generated
+  automatically by the server (sequential for the in‑memory example)."""
+  addAuthor(name: String!, birthdate: String!): Author!
+
+  """Create a new book entry.  The client must supply a valid authorId
+  (resolution of the author happens lazily via the Book.author resolver).
+  If the referenced author is missing the book still exists, but the
+  returned author field will be `null` at query time."""
+  addBook(title: String!, authorId: ID!): Book!
+}

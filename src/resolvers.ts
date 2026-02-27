@@ -15,7 +15,7 @@ export const books = [
 ];
 
 export const authors = [
-  { id: '1', name: 'Homer', birthdate: '-0800-01-01' },
+  { id: '1', name: 'Homer', birthdate: '0800-01-01' },
   { id: '2', name: 'Jane Austen', birthdate: '1775-12-16' },
   { id: '3', name: 'George Orwell', birthdate: '1903-06-25' },
   { id: '4', name: 'Harper Lee', birthdate: '1926-04-28' },
@@ -30,11 +30,30 @@ export const authors = [
 export const resolvers = {
   Query: {
     hello: () => 'Hello from Fastify + Apollo',
-    books: () => books,
+    books: () => [...books],
     book: (_parent: unknown, args: { id: string }) => books.find((book) => book.id === args.id) ?? null,
-    authors: () => authors,
+    authors: () => [...authors],
     author: (_parent: unknown, args: { id: string }) =>
       authors.find((a) => a.id === args.id) ?? null
+  },
+
+  Mutation: {
+    // add a new author to the in-memory list and return it
+    addAuthor: (_parent: unknown, args: { name: string; birthdate: string }) => {
+      const nextId = String(authors.length + 1);
+      const newAuthor = { id: nextId, name: args.name, birthdate: args.birthdate };
+      authors.push(newAuthor);
+      return newAuthor;
+    },
+
+    // add a new book; author existence is not validated here so that the
+    // resolver for `Book.author` can demonstrate the nullable branch
+    addBook: (_parent: unknown, args: { title: string; authorId: string }) => {
+      const nextId = String(books.length + 1);
+      const newBook = { id: nextId, title: args.title, authorId: args.authorId };
+      books.push(newBook);
+      return newBook;
+    }
   },
 
   Book: {
