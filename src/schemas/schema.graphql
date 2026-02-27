@@ -4,8 +4,20 @@ type Book {
   id: ID!
   """Display title of the book."""
   title: String!
-  """Author name for the book."""
-  author: String!
+  """Resolved author object for the book. Might be null if the author record is missing."""
+  author: Author
+}
+
+"""An author of one or more books."""
+type Author {
+  """Unique identifier for the author."""
+  id: ID!
+  """Full name of the author."""
+  name: String!
+  """Birthdate in ISO format (YYYY-MM-DD)."""
+  birthdate: String!
+  """Books written by this author."""
+  books: [Book!]!
 }
 
 type Query {
@@ -15,4 +27,8 @@ type Query {
   books: [Book!]!
   """Fetch a single book by ID."""
   book(id: ID!): Book
+  """List all authors."""
+  authors: [Author!]!
+  """Fetch a single author by ID."""
+  author(id: ID!): Author
 }
