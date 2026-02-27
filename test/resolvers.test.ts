@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { resolvers, books, authors } from '../src/resolvers';
 
 describe('resolvers', () => {
@@ -11,6 +12,20 @@ describe('resolvers', () => {
     expect(result).toEqual(books);
     expect(Array.isArray(result)).toBe(true);
     expect(result.length).toBeGreaterThan(0);
+  });
+
+  test('genres query returns all genres', () => {
+    const result = resolvers.Query.genres();
+    expect(result).toEqual(expect.arrayContaining([{ id: '1', name: 'Classics' }]));
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  test('genre query returns matching genre or null', () => {
+    const good = resolvers.Query.genre(null, { id: '2' });
+    expect(good).toEqual({ id: '2', name: 'Science Fiction' });
+    const bad = resolvers.Query.genre(null, { id: '999' });
+    expect(bad).toBeNull();
   });
 
   test('book returns matching book for valid id', () => {
@@ -49,6 +64,18 @@ describe('resolvers', () => {
     expect(result).toEqual(authors.find((a) => a.id === book.authorId));
   });
 
+  test('Book.genres resolver returns correct genre list', () => {
+    const single = books.find((b) => b.genreIds && b.genreIds.length === 1)!;
+    const multiple = books.find((b) => b.genreIds && b.genreIds.length > 1)!;
+    const none = books.find((b) => !b.genreIds || b.genreIds.length === 0)!;
+
+    expect(resolvers.Book.genres(single as any)).toEqual(
+      expect.arrayContaining([{ id: single.genreIds![0], name: expect.any(String) }])
+    );
+    expect(resolvers.Book.genres(multiple as any).length).toBeGreaterThan(1);
+    expect(resolvers.Book.genres(none as any)).toEqual([]);
+  });
+
   test('Author.books resolver returns books list', () => {
     const author = authors[1];
     const result = resolvers.Author.books(author as any);
@@ -73,7 +100,7 @@ describe('mutations', () => {
 
   test('addBook creates and returns a new book', () => {
     const input = { title: 'Fresh Title', authorId: '1' };
-    const result = resolvers.Mutation.addBook(null, input);
+    const result = resolvers.Mutation.addBook(null, input as any);
     expect(result).toMatchObject(input);
     expect(result.id).toBe(String(originalBookCount + 1));
     expect(books.length).toBe(originalBookCount + 1);
@@ -81,6 +108,8 @@ describe('mutations', () => {
     // the author resolver should still function for the newly added book
     const authorForNew = resolvers.Book.author(result as any);
     expect(authorForNew).toEqual(authors.find((a) => a.id === input.authorId));
+    // newly created book should have an empty genres array by default
+    expect(resolvers.Book.genres(result as any)).toEqual([]);
   });
 
   afterAll(() => {

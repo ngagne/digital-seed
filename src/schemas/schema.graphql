@@ -6,6 +6,8 @@ type Book {
   title: String!
   """Resolved author object for the book. Might be null if the author record is missing."""
   author: Author
+  """List of genres assigned to the book. Empty when no genres have been added."""
+  genres: [Genre!]!
 }
 
 """An author of one or more books."""
@@ -31,6 +33,10 @@ type Query {
   authors: [Author!]!
   """Fetch a single author by ID."""
   author(id: ID!): Author
+  """Retrieve all defined genres."""
+  genres: [Genre!]!
+  """Fetch a genre by its ID."""
+  genre(id: ID!): Genre
 }
 
 """Modifications to the catalog data."""
@@ -41,7 +47,17 @@ type Mutation {
 
   """Create a new book entry.  The client must supply a valid authorId
   (resolution of the author happens lazily via the Book.author resolver).
+  The newly created book initially has no genres assigned; clients may
+  add genreIds via a future mutation if needed.
   If the referenced author is missing the book still exists, but the
   returned author field will be `null` at query time."""
   addBook(title: String!, authorId: ID!): Book!
+}
+
+"""A categorization label that may be attached to books."""
+type Genre {
+  """Unique identifier for the genre."""
+  id: ID!
+  """Human-readable name of the genre."""
+  name: String!
 }

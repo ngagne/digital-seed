@@ -2,16 +2,18 @@
 // The schema now models authors as a first‑class type, so books
 // reference their author via `authorId` instead of a plain string.
 export const books = [
-  { id: '1', title: 'The Odyssey', authorId: '1' },
-  { id: '2', title: 'Pride and Prejudice', authorId: '2' },
-  { id: '3', title: '1984', authorId: '3' },
-  { id: '4', title: 'To Kill a Mockingbird', authorId: '4' },
-  { id: '5', title: 'The Great Gatsby', authorId: '5' },
-  { id: '6', title: 'Jane Eyre', authorId: '6' },
-  { id: '7', title: 'Wuthering Heights', authorId: '7' },
-  { id: '8', title: 'Moby Dick', authorId: '8' },
-  { id: '9', title: 'War and Peace', authorId: '9' },
-  { id: '10', title: 'The Catcher in the Rye', authorId: '10' }
+  // examples demonstrating a book with a single genre, multiple genres,
+  // and no genres at all
+  { id: '1', title: 'The Odyssey', authorId: '1', genreIds: ['1'] },
+  { id: '2', title: 'Pride and Prejudice', authorId: '2', genreIds: ['1', '3'] },
+  { id: '3', title: '1984', authorId: '3', genreIds: ['2'] },
+  { id: '4', title: 'To Kill a Mockingbird', authorId: '4', genreIds: [] },
+  { id: '5', title: 'The Great Gatsby', authorId: '5', genreIds: ['1'] },
+  { id: '6', title: 'Jane Eyre', authorId: '6', genreIds: ['3'] },
+  { id: '7', title: 'Wuthering Heights', authorId: '7', genreIds: ['1', '3'] },
+  { id: '8', title: 'Moby Dick', authorId: '8', genreIds: ['1'] },
+  { id: '9', title: 'War and Peace', authorId: '9', genreIds: ['1', '2'] },
+  { id: '10', title: 'The Catcher in the Rye', authorId: '10', genreIds: [] }
 ];
 
 export const authors = [
@@ -27,6 +29,13 @@ export const authors = [
   { id: '10', name: 'J.D. Salinger', birthdate: '1919-01-01' }
 ];
 
+export const genres = [
+  { id: '1', name: 'Classics' },
+  { id: '2', name: 'Science Fiction' },
+  { id: '3', name: 'Romance' },
+  { id: '4', name: 'Non-Fiction' }
+];
+
 export const resolvers = {
   Query: {
     hello: () => 'Hello from Fastify + Apollo',
@@ -34,7 +43,9 @@ export const resolvers = {
     book: (_parent: unknown, args: { id: string }) => books.find((book) => book.id === args.id) ?? null,
     authors: () => [...authors],
     author: (_parent: unknown, args: { id: string }) =>
-      authors.find((a) => a.id === args.id) ?? null
+      authors.find((a) => a.id === args.id) ?? null,
+    genres: () => [...genres],
+    genre: (_parent: unknown, args: { id: string }) => genres.find((g) => g.id === args.id) ?? null
   },
 
   Mutation: {
@@ -48,9 +59,10 @@ export const resolvers = {
 
     // add a new book; author existence is not validated here so that the
     // resolver for `Book.author` can demonstrate the nullable branch
+    // newly created books receive an empty genreIds array by default
     addBook: (_parent: unknown, args: { title: string; authorId: string }) => {
       const nextId = String(books.length + 1);
-      const newBook = { id: nextId, title: args.title, authorId: args.authorId };
+      const newBook = { id: nextId, title: args.title, authorId: args.authorId, genreIds: [] };
       books.push(newBook);
       return newBook;
     }
@@ -59,7 +71,10 @@ export const resolvers = {
   Book: {
     // resolve author field by looking up the corresponding author record
     author: (book: { authorId: string }) =>
-      authors.find((a) => a.id === book.authorId) ?? null
+      authors.find((a) => a.id === book.authorId) ?? null,
+    // return genre objects for the book; gracefully handle absent lists
+    genres: (book: { genreIds?: string[] }) =>
+      genres.filter((g) => book.genreIds?.includes(g.id))
   },
 
   Author: {
