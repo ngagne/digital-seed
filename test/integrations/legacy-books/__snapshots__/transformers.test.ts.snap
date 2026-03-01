@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`legacy book transformers transforms listing into normalized domain object 1`] = `
+{
+  "createdAt": "2025-02-14T16:45:22.000Z",
+  "isInStock": true,
+  "price": 19.99,
+  "purchaseUrl": "https://store101.example.com/book/9780321125217",
+  "storeId": "101",
+}
+`;
+
+exports[`legacy book transformers transforms store payload and normalizes yes/no flag 1`] = `
+{
+  "active": true,
+  "id": "101",
+  "name": "Central City Books",
+}
+`;

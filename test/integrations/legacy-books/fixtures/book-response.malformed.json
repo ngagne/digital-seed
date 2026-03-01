@@ -1,0 +1,13 @@
+{
+  "Title": "Domain-Driven Design",
+  "isbn": "9780321125217",
+  "listings": [
+    {
+      "storeID": "",
+      "purchase_url": null,
+      "created_at": "2025-02-14",
+      "PRICE": "abc",
+      "isInStock": "maybe"
+    }
+  ]
+}
