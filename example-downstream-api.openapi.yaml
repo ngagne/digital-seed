@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: Legacy Book Inventory API
+  version: 1.3.7
+  description: >
+    Legacy read-only API for retrieving books and store information.
+    Data formats may not follow modern best practices.
+
+servers:
+  - url: https://legacy-books.example.com/api
+
+paths:
+  /books/{isbn}:
+    get:
+      summary: Get book details by ISBN
+      operationId: fetchBook
+      parameters:
+        - name: isbn
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Book record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookResponse'
+        '404':
+          description: Book not found
+
+  /stores/{id}:
+    get:
+      summary: Get store details by ID
+      operationId: fetchStore
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Store record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StoreResponse'
+        '404':
+          description: Store not found
+
+components:
+  schemas:
+    BookResponse:
+      type: object
+      properties:
+        Title:
+          type: string
+          example: "Domain-Driven Design"
+        isbn:
+          type: string
+          example: "9780321125217"
+        listings:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/ListingResponse'
+
+    ListingResponse:
+      type: object
+      properties:
+        storeID:                # inconsistent casing
+          type: string
+          example: "101"
+        purchase_url:
+          type: string
+          example: "http://store101.example.com/book/9780321125217"
+        created_at:
+          type: string
+          description: Date listing was created (MM/DD/YYYY HH:mm:ss format)
+          example: "02/14/2025 16:45:22"
+        PRICE:
+          type: string
+          description: Price in USD represented as a string
+          example: "19.99"
+        isInStock:
+          type: string
+          description: "Indicates availability. Values: 'yes' or 'no'"
+          example: "yes"
+
+    StoreResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "101"
+        name:
+          type: string
+          example: "Central City Books"
+        active:
+          type: string
+          description: "Indicates if store is active. Values: 'yes' or 'no'"
+          example: "yes"
